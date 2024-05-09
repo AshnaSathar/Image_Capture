@@ -55,17 +55,19 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
 });
 
-     function serviceConfigure(deviceId){
-    document.getElementById('deviceid').value=deviceId;
-    
+    function serviceConfigure(deviceId)
+    {
+        document.getElementById('deviceid').value=deviceId;
     }
-    function initializeFlutterCommunication() {
+    function initializeFlutterCommunication() 
+    {
         try {
-            communicationchannel.onmessage = function(event) {
-                var dataFromFlutter = event.data;
-                console.log("Data received from Flutter:", dataFromFlutter);
-            };
-          id=  communicationchannel.postMessage('Message from javascript'); 
+            communicationchannel.onmessage = function(event)
+                 {
+                    var dataFromFlutter = event.data;
+                    console.log("Data received from Flutter:", dataFromFlutter);
+                };
+             id=  communicationchannel.postMessage('Message from javascript'); 
         } catch (error) {
             console.log("error",error)
         }
