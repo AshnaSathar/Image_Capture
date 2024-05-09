@@ -47,41 +47,28 @@
        
     </form>
 
-
-    <button type="button" onclick="connectFlutter();">
-    Click
-</button>
-
 <script type="text/javascript">
 
-     function setdeviceId(deviceId){
-    // window.deviceId=deviceId;
+document.addEventListener("DOMContentLoaded", (event) => {
+  console.log("DOM fully loaded");
+  initializeFlutterCommunication();
 
-    // console.log("device id is equalto="+deviceId);
+});
+
+     function serviceConfigure(deviceId){
     document.getElementById('deviceid').value=deviceId;
     
- }
-    function connectFlutter() {
-        // console.log("inside the function call");
-        // console.log("a");
+    }
+    function initializeFlutterCommunication() {
         try {
-            sample.onmessage = function(event) {
+            communicationchannel.onmessage = function(event) {
                 var dataFromFlutter = event.data;
                 console.log("Data received from Flutter:", dataFromFlutter);
-                // Handle data as needed
             };
-            // console.log("b"); 
-          id=  sample.postMessage('message 1 from javascript'); 
-          
-        //   console.log("c");
+          id=  communicationchannel.postMessage('Message from javascript'); 
         } catch (error) {
             console.log("error",error)
-            
         }
-
- 
     }
 </script>
- 
-
 </x-guest-layout>
