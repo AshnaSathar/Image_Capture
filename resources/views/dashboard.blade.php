@@ -4,6 +4,10 @@
             Dashboard
         </h2>
     </x-slot>
+    <div class="text-gray-900 dark:text-gray-800">
+
+        Device ID: <span id="deviceIdSpan"></span>
+    </div>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -16,8 +20,8 @@
                                 <button id="captureBtn" class="mr-2">Capture Image</button>
                             </div>
                             <div class="mb-4">
-                                <input type="file" name="image" id="uploadInput" accept="image/*" class="mr-2">
-                                <button type="button" id="uploadBtn" class="mr-2">Upload</button>
+                                <input type="file" name="image" id="uploadInput" accept="image/*" class="mr-2" capture="user">
+                                <button type="button" id="uploadBtn" class="mr-2" capture="user">Upload</button>
                             </div>
                             <div class="mb-4">
                                 <button id="alertBtn">Show Alert</button>
@@ -30,6 +34,13 @@
     </div>
 
     <script>
+         var deviceId = localStorage.getItem('deviceId');
+        
+        // Display device ID in the span element
+        var deviceIdSpan = document.getElementById('deviceIdSpan');
+        deviceIdSpan.textContent = deviceId;
+
+        // --------------
         const alertBtn = document.getElementById('alertBtn');
         const captureBtn = document.getElementById('captureBtn');
         const uploadInput = document.getElementById('uploadInput');
