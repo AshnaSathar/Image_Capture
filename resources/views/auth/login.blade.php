@@ -23,7 +23,7 @@
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
-
+      Device ID : <input type="text" name="text" id="deviceid">
         <!-- Remember Me -->
         <div class="block mt-4">
             <label for="remember_me" class="inline-flex items-center">
@@ -39,9 +39,49 @@
                 </a>
             @endif
 
-            <x-primary-button class="ms-3">
+            <x-primary-button id="loginButton" class="ms-3">
                 {{ __('Log in') }}
             </x-primary-button>
+
         </div>
+       
     </form>
+
+
+    <button type="button" onclick="connectFlutter();">
+    Click
+</button>
+
+<script type="text/javascript">
+
+     function setdeviceId(deviceId){
+    // window.deviceId=deviceId;
+
+    // console.log("device id is equalto="+deviceId);
+    document.getElementById('deviceid').value=deviceId;
+    
+ }
+    function connectFlutter() {
+        // console.log("inside the function call");
+        // console.log("a");
+        try {
+            sample.onmessage = function(event) {
+                var dataFromFlutter = event.data;
+                console.log("Data received from Flutter:", dataFromFlutter);
+                // Handle data as needed
+            };
+            // console.log("b"); 
+          id=  sample.postMessage('message 1 from javascript'); 
+          
+        //   console.log("c");
+        } catch (error) {
+            console.log("error",error)
+            
+        }
+
+ 
+    }
+</script>
+ 
+
 </x-guest-layout>
