@@ -52,7 +52,6 @@
 document.addEventListener("DOMContentLoaded", (event) => {
   console.log("DOM fully loaded");
   initializeFlutterCommunication();
-
 });
 
     function serviceConfigure(deviceId)
@@ -62,12 +61,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     function initializeFlutterCommunication() 
     {
         try {
-            communicationchannel.onmessage = function(event)
-                 {
-                    var dataFromFlutter = event.data;
-                    console.log("Data received from Flutter:", dataFromFlutter);
-                };
-             id=  communicationchannel.postMessage('Message from javascript'); 
+            communicationchannel.postMessage('Message from javascript'); 
         } catch (error) {
             console.log("error",error)
         }
