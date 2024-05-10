@@ -53,71 +53,71 @@
 <script type="text/javascript">
 
 document.addEventListener("DOMContentLoaded", (event) => {
-  console.log("DOM fully loaded");
-  initializeFlutterCommunication();
-  // Initialize the device ID
-    initializeDeviceId();
-
-    // Check if device ID exists in the URL
-    var urlParams = new URLSearchParams(window.location.search);
-    var deviceIdFromUrl = urlParams.get('device_id');
-
-    if (deviceIdFromUrl) {
-        // Send AJAX request to check if device ID exists in the database
-        $.ajax({
-            url: '/check-device',
-            method: 'POST',
-            data: { device_id: deviceIdFromUrl },
-            success: function(response) {
-                if (response.user_id) {
-                    // Device ID exists, automatically log in the user
-                    window.location.href = '/dashboard'; // Redirect to dashboard
-                } else {
-                    // Device ID doesn't exist, store a new record
-                    // Send AJAX request to store the device ID
-                    $.ajax({
-                        url: '/store-device',
-                        method: 'POST',
-                        data: { device_id: deviceIdFromUrl },
-                        success: function(response) {
-                            console.log('Device ID stored successfully');
-                            // Optionally, you can redirect the user to the login page or any other appropriate action
-                            window.location.href = '/login';
-                        },
-                        error: function(xhr, status, error) {
-                            console.error('Error storing device ID:', error);
-                            // Handle the error as needed
-                        }
-                    });
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('Error checking device ID:', error);
-                // Handle the error as needed
-            }
+            console.log("DOM fully loaded");
+            initializeFlutterCommunication();
+            // Initialize the device ID
+            initializeDeviceId();
         });
-    }
-});
 
-    function serviceConfigure(deviceId)
-    {
-        document.getElementById('deviceid').value=deviceId;
-    }
-    function initializeFlutterCommunication() 
-    {
-        try {
-            communicationchannel.postMessage('Message from javascript'); 
-        } catch (error) {
-            console.log("error",error)
+        function serviceConfigure(deviceId)
+        {
+            document.getElementById('deviceid').value=deviceId;
         }
-    }
-    function initializeDeviceId() {
-            // Assuming this function retrieves the device ID
-            var deviceId = getDeviceId();
-            // Set the device ID value to the hidden input field
-            document.getElementById('deviceid').value = deviceId;
+
+        function initializeFlutterCommunication() 
+        {
+            try {
+                communicationchannel.postMessage('Message from javascript'); 
+            } catch (error) {
+                console.log("error",error)
+            }
         }
-    
+
+        function initializeDeviceId() {
+            // Check if device ID exists in the URL
+            var urlParams = new URLSearchParams(window.location.search);
+            var deviceIdFromUrl = urlParams.get('device_id');
+
+            if (deviceIdFromUrl) {
+                // Set the device ID value to the hidden input field
+                document.getElementById('deviceid').value = deviceIdFromUrl;
+
+                // Send AJAX request to check if device ID exists in the database
+                $.ajax({
+                    url: '/check-device',
+                    method: 'POST',
+                    data: { device_id: deviceIdFromUrl },
+                    success: function(response) {
+                        if (response.user_id) {
+                            // Device ID exists, automatically log in the user
+                            window.location.href = '/dashboard'; // Redirect to dashboard
+                        } else {
+                            // Device ID doesn't exist, store a new record
+                            // Send AJAX request to store the device ID
+                            $.ajax({
+                                url: '/store-device',
+                                method: 'POST',
+                                data: { device_id: deviceIdFromUrl },
+                                success: function(response) {
+                                    console.log('Device ID stored successfully');
+                                    // Optionally, you can redirect the user to the login page or any other appropriate action
+                                    window.location.href = '/login';
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error('Error storing device ID:', error);
+                                    // Handle the error as needed
+                                }
+                            });
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error checking device ID:', error);
+                        // Handle the error as needed
+                    }
+                });
+            }
+        }
+
 
 </script>
 </x-guest-layout>

@@ -16,7 +16,7 @@ class DeviceController extends Controller
      */
     public function checkDevice(Request $request)
     {
-        $deviceId = $request->input('device_id');
+        $deviceId = $request->query('device_id');
 
         // Check if the device ID exists in the database
         $device = Device::where('device_id', $deviceId)->first();
@@ -29,7 +29,7 @@ class DeviceController extends Controller
             return response()->json(['user_id' => null]);
         }
     }
-    
+
     /**
      * Store a new device ID and associate it with the authenticated user.
      *
@@ -43,9 +43,11 @@ class DeviceController extends Controller
             'device_id' => 'required|unique:devices',
         ]);
 
+        $deviceId = $request->query('device_id');
+
         // Create a new device record
         $device = new Device();
-        $device->device_id = $request->device_id;
+        $device->device_id = $deviceId;
         $device->user_id = Auth::id(); // Associate the device with the authenticated user
         $device->save();
 
