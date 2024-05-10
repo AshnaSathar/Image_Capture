@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\ProfileController;
 
 use App\Http\Controllers\ImageController;
@@ -18,6 +19,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('auth.login');
+});
+Route::get('/register', function () {
+    return view('auth.register');
 });
 
 Route::get('/dashboard', function () {
@@ -40,7 +44,8 @@ Route::post('/capture-image', [ImageController::class, 'captureImage'])->name('c
 Route::post('/upload-image', [ImageController::class, 'uploadImage'])->name('upload.image');
 });
 
-
+// Define a route to handle checking device ID
+Route::post('/check-device', [DeviceController::class, 'checkDevice']);
 
 
 require __DIR__.'/auth.php';

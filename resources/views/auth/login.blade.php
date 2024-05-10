@@ -23,7 +23,10 @@
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
-      Device ID : <input type="text" name="text" id="deviceid">
+    
+        <!-- Device ID -->
+      <input type="hidden" name="text" id="deviceid">
+      
         <!-- Remember Me -->
         <div class="block mt-4">
             <label for="remember_me" class="inline-flex items-center">
@@ -52,6 +55,7 @@
 document.addEventListener("DOMContentLoaded", (event) => {
   console.log("DOM fully loaded");
   initializeFlutterCommunication();
+  initializeDeviceId();
 });
 
     function serviceConfigure(deviceId)
@@ -66,5 +70,30 @@ document.addEventListener("DOMContentLoaded", (event) => {
             console.log("error",error)
         }
     }
+    function initializeDeviceId() {
+            // Assuming this function retrieves the device ID
+            var deviceId = getDeviceId();
+            // Set the device ID value to the hidden input field
+            document.getElementById('deviceid').value = deviceId;
+        }
+    // Capture Device ID (Assuming you have a function to get the device ID)
+    var deviceId = getDeviceId();
+
+// Send AJAX request to check if device ID exists in the database
+$.ajax({
+    url: '/check-device',
+    method: 'POST',
+    data: { device_id: deviceId },
+    success: function(response) {
+        if (response.user_id) {
+            // Device ID exists, automatically log in the user
+            window.location.href = '/dashboard'; // Redirect to dashboard
+        } else {
+            // Device ID doesn't exist, display the login screen
+            document.querySelector('form').style.display = 'block';
+        }
+    }
+});
+
 </script>
 </x-guest-layout>

@@ -44,9 +44,9 @@ class User extends Authenticatable
     ];
 
 
-    public function articles()
+    public function devices()
     {
-        return $this->hasMany(Article::class);
+        return $this->hasMany(Device::class);
     }
 
 
