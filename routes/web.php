@@ -47,5 +47,7 @@ Route::post('/upload-image', [ImageController::class, 'uploadImage'])->name('upl
 // Define a route to handle checking device ID
 Route::post('/check-device', [DeviceController::class, 'checkDevice']);
 
+// Route to store device ID
+Route::post('/store-device', [DeviceController::class, 'store']);
 
 require __DIR__.'/auth.php';
